@@ -1,6 +1,6 @@
 showcaseMe
 ==========
 
-jQuery plugin to create slideshows using animate.css.
+Customizable jQuery plugin to create sliders with different animations leveraging animate.css.
 
-Documentation will come soon.
+Documentation & tests will come soon.
