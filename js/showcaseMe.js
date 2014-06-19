@@ -1,14 +1,8 @@
 $.fn.showcaseMe = function (options) {
 
-    var $showcase = $(this),
-        $slider = $showcase.find('> ul'),
-        animationEndSpeed = 1000,
-        currentPage = 0,
-        pagesLength = $showcase.find('> ul')[0].children.length;
    if (this.length  == 0) return
 
     var defaults = {
-        sliderWrapper: "",
         animationInNegative: "animated bounceInLeft",
         animationOutNegative: "animated bounceOutLeft",
         animationInPositive: "animated bounceInRight",
@@ -22,7 +16,12 @@ $.fn.showcaseMe = function (options) {
         disableBtnTime: 1300
     };
 
+    var $showcase,
         $slideables,
+        animationEndSpeed,
+        currentPage,
+        pagesLength;
+
     self.options = $.extend({}, defaults, options);
 
     function init() {
@@ -32,7 +31,14 @@ $.fn.showcaseMe = function (options) {
         }
     }
 
-    init();
+    $(this).each(function() {
+        $showcase = $(this);
+        $slideables = $showcase.find('ul');
+        animationEndSpeed = 1000;
+        currentPage = 0;
+        pagesLength = $showcase.find('ul')[0].children.length;
+        init();
+    });
 
     /*
     ** Plugin functions
@@ -100,7 +106,7 @@ $.fn.showcaseMe = function (options) {
         disableClicks(self.options.nextBtn, self.options.disableBtnTime);
     }
 
-    $(self.options.sliderWrapper).hover(function( e ) {
+    $($showcase).hover(function( e ) {
       return e.type=='mouseenter' ? clearInterval(interval) : autoScrollMe();
     });
 
