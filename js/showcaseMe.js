@@ -22,6 +22,7 @@ $.fn.showcaseMe = function (options) {
         disableBtnTime: 1300
     };
 
+        $slideables,
     self.options = $.extend({}, defaults, options);
 
     function init() {
@@ -45,7 +46,7 @@ $.fn.showcaseMe = function (options) {
 
     // Animates elements giving a slide to left rotation feel (all items rotate to the left).
     function animateSlideNext(page, currentPage) {
-        $($slider).each(function(index, element) {
+        $($slideables).each(function(index, element) {
             $(element).find('> li').eq(currentPage).addClass(self.options.animationOutNegative);
             $(element).find('> li').eq(page).addClass(self.options.animationInPositive);
             $(element).find('> li').eq(page).removeClass(self.options.hideClass);
@@ -54,7 +55,7 @@ $.fn.showcaseMe = function (options) {
 
     // Animates elements giving a slide to right rotation feel (all items rotate to the right).
     function animateSlidePrev(page, currentPage) {
-        $($slider).each(function(index, element) {
+        $($slideables).each(function(index, element) {
             $(element).find('> li').eq(currentPage).addClass(self.options.animationOutPositive);
             $(element).find('> li').eq(page).addClass(self.options.animationInNegative);
             $(element).find('> li').eq(page).removeClass(self.options.hideClass);
@@ -64,7 +65,7 @@ $.fn.showcaseMe = function (options) {
     // Brings everything back to it's normal state for a given page.
     function cleanup(page,direction) {
         setTimeout(function() {
-            $($slider).each(function(index, element) {
+            $($slideables).each(function(index, element) {
                 $(element).find('> li').eq(page).siblings().removeClass(self.options.animationOutNegative + " " + self.options.animationInNegative + " " + self.options.animationOutPositive + " "+ self.options.animationInPositive);
                 $(element).find('> li').eq(page).siblings().addClass(self.options.hideClass);
             });
@@ -74,7 +75,7 @@ $.fn.showcaseMe = function (options) {
 
     // Hide all but first li(s) on init.
     function restartVisibility() {
-        $($slider).each(function( index, element ) {
+        $($slideables).each(function( index, element ) {
             $(element).find('> li:gt(0)').addClass(self.options.hideClass);
         });
     }
