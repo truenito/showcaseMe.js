@@ -1,13 +1,8 @@
 $.fn.showcaseMe = function (options) {
 
-    var $showcase = $(this),
-        $slider = $showcase.find('> ul'),
-        animationEndSpeed = 1000,
-        currentPage = 0,
-        pagesLength = $showcase.find('> ul')[0].children.length;
+   if (this.length  == 0) return
 
     var defaults = {
-        sliderWrapper: "",
         animationInNegative: "animated bounceInLeft",
         animationOutNegative: "animated bounceOutLeft",
         animationInPositive: "animated bounceInRight",
@@ -21,6 +16,12 @@ $.fn.showcaseMe = function (options) {
         disableBtnTime: 1300
     };
 
+    var $showcase,
+        $slideables,
+        animationEndSpeed,
+        currentPage,
+        pagesLength;
+
     self.options = $.extend({}, defaults, options);
 
     function init() {
@@ -30,7 +31,14 @@ $.fn.showcaseMe = function (options) {
         }
     }
 
-    init();
+    $(this).each(function() {
+        $showcase = $(this);
+        $slideables = $showcase.find('ul');
+        animationEndSpeed = 1000;
+        currentPage = 0;
+        pagesLength = $showcase.find('ul')[0].children.length;
+        init();
+    });
 
     /*
     ** Plugin functions
@@ -44,7 +52,7 @@ $.fn.showcaseMe = function (options) {
 
     // Animates elements giving a slide to left rotation feel (all items rotate to the left).
     function animateSlideNext(page, currentPage) {
-        $($slider).each(function(index, element) {
+        $($slideables).each(function(index, element) {
             $(element).find('> li').eq(currentPage).addClass(self.options.animationOutNegative);
             $(element).find('> li').eq(page).addClass(self.options.animationInPositive);
             $(element).find('> li').eq(page).removeClass(self.options.hideClass);
@@ -53,7 +61,7 @@ $.fn.showcaseMe = function (options) {
 
     // Animates elements giving a slide to right rotation feel (all items rotate to the right).
     function animateSlidePrev(page, currentPage) {
-        $($slider).each(function(index, element) {
+        $($slideables).each(function(index, element) {
             $(element).find('> li').eq(currentPage).addClass(self.options.animationOutPositive);
             $(element).find('> li').eq(page).addClass(self.options.animationInNegative);
             $(element).find('> li').eq(page).removeClass(self.options.hideClass);
@@ -63,7 +71,7 @@ $.fn.showcaseMe = function (options) {
     // Brings everything back to it's normal state for a given page.
     function cleanup(page,direction) {
         setTimeout(function() {
-            $($slider).each(function(index, element) {
+            $($slideables).each(function(index, element) {
                 $(element).find('> li').eq(page).siblings().removeClass(self.options.animationOutNegative + " " + self.options.animationInNegative + " " + self.options.animationOutPositive + " "+ self.options.animationInPositive);
                 $(element).find('> li').eq(page).siblings().addClass(self.options.hideClass);
             });
@@ -73,7 +81,7 @@ $.fn.showcaseMe = function (options) {
 
     // Hide all but first li(s) on init.
     function restartVisibility() {
-        $($slider).each(function( index, element ) {
+        $($slideables).each(function( index, element ) {
             $(element).find('> li:gt(0)').addClass(self.options.hideClass);
         });
     }
@@ -98,7 +106,7 @@ $.fn.showcaseMe = function (options) {
         disableClicks(self.options.nextBtn, self.options.disableBtnTime);
     }
 
-    $(self.options.sliderWrapper).hover(function( e ) {
+    $($showcase).hover(function( e ) {
       return e.type=='mouseenter' ? clearInterval(interval) : autoScrollMe();
     });
 
