@@ -5,6 +5,7 @@ $.fn.showcaseMe = function (options) {
         animationEndSpeed = 1000,
         currentPage = 0,
         pagesLength = $showcase.find('> ul')[0].children.length;
+   if (this.length  == 0) return
 
     var defaults = {
         sliderWrapper: "",
