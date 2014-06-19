@@ -106,7 +106,7 @@ $.fn.showcaseMe = function (options) {
         disableClicks(self.options.nextBtn, self.options.disableBtnTime);
     }
 
-    $($showcase).hover(function( e ) {
+    $showcase.hover(function( e ) {
       return e.type=='mouseenter' ? clearInterval(interval) : autoScrollMe();
     });
 
