@@ -26,8 +26,13 @@ $.fn.showcaseMe = function (options) {
 
     function init() {
         restartVisibility();
-        if (self.options.autoScroll === true) {
+        if (pagesLength <= 1){
+          $(self.options.nextBtn).css('visibility','hidden');
+          $(self.options.prevBtn).css('visibility','hidden')
+        }
+        else if (self.options.autoScroll === true) {
             autoScrollMe();
+            bindResetOnHover();
         }
     }
 
@@ -106,9 +111,11 @@ $.fn.showcaseMe = function (options) {
         disableClicks(self.options.nextBtn, self.options.disableBtnTime);
     }
 
-    $showcase.hover(function( e ) {
-      return e.type=='mouseenter' ? clearInterval(interval) : autoScrollMe();
-    });
+    function bindResetOnHover() {
+      $showcase.hover(function( e ) {
+        return e.type=='mouseenter' ? clearInterval(interval) : autoScrollMe();
+      });
+    }
 
     /*
     ** Plugin bindings
